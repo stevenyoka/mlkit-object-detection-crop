@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1054847864485",
+    "project_id": "test-git-action-19cda",
+    "storage_bucket": "test-git-action-19cda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054847864485:android:40339983b0567e7c75874c",
+        "android_client_info": {
+          "package_name": "com.example.objectdetection"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0qzGbdHRrdipq6LvtickhupNjshCFlVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

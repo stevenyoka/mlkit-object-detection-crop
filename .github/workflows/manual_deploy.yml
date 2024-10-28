@@ -1,0 +1,45 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Manual Build
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        type: string
+        required: true
+        default: "Manual Debug"
+        description: "Release Note"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  lint:
+    name: linting debug variant
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Grant Access To Gradle
+        run: chmod +x ./gradlew
+      - name: Execute Gradle Command - assembleDebug
+        run: ./gradlew assembleDebug
+      - name: upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+           appId: ${{secrets.FIREBASE_APP_ID}}
+           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+           groups: testers
+           file: app/build/outputs/apk/debug/app-debug.apk
+           releaseNotes: ${{ inputs.release_notes }}
